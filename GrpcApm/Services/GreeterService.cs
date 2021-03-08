@@ -1,6 +1,7 @@
 using Grpc.Core;
 using Grpc.Net.Client;
 using Microsoft.Extensions.Logging;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace GrpcApm
@@ -11,7 +12,7 @@ namespace GrpcApm
 
         public GreeterService()
         {
-            client = new Greeter.GreeterClient(GrpcChannel.ForAddress("http://localhost:5000"));
+            client = new Greeter.GreeterClient(GrpcChannel.ForAddress("http://localhost:5000", new GrpcChannelOptions { HttpClient = new HttpClient()}));
         }
 
         public override async Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
